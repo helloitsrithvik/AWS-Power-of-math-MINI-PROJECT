@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>To the Power of Math!</title>
+    <!-- Modern Styling for the client UI -->
+    <style>
+        body {
+            background-color: #1e1e2f;
+            font-family: "Segoe UI", Roboto, system-ui, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #fff;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #00e676;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        form {
+            background: #2a2d3a;
+            padding: 30px 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 350px;
+        }
+
+        label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #9effd8;
+            margin-bottom: 6px;
+        }
+
+        input {
+            padding: 12px 14px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 10px;
+            outline: none;
+            width: 100%;
+            background: #fff;
+            color: #1e1e2f;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            box-shadow: 0 0 0 3px #00e67666;
+        }
+
+        button {
+            padding: 14px;
+            background: #00e676;
+            border: none;
+            border-radius: 12px;
+            color: #1e1e2f;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #00c853;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 200, 83, 0.4);
+        }
+    </style>
+    <script>
+        // callAPI function that takes the base and exponent numbers as parameters
+        var callAPI = (base,exponent)=>{
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            var raw = JSON.stringify({"base":base,"exponent":exponent});
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            fetch("https://isbvvyzqb4.execute-api.ap-south-1.amazonaws.com/dev", requestOptions)
+            .then(response => response.text())
+            .then(result => alert(JSON.parse(result).body))
+            .catch(error => console.log('error', error));
+        }
+    </script>
+</head>
+<body>
+    <h1>TO THE POWER OF MATH!</h1>
+	<form>
+        <div>
+            <label>Base number:</label>
+            <input type="text" id="base">
+        </div>
+        <div>
+            <label>...to the power of:</label>
+            <input type="text" id="exponent">
+        </div>
+        <button type="button" onclick="callAPI(document.getElementById('base').value,document.getElementById('exponent').value)">CALCULATE</button>
+    </form>
+</body>
+</html>
